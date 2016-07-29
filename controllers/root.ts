@@ -22,9 +22,8 @@ class Root {
         if (command == undefined) {
             throw new K.InternalServerError("Missing ACTION_COMMAND");
         }
-        
+
         let output = Process.execFileSync(command, { encoding: "utf8", stdio: "pipe" });
-            context.response.render("done", { output: output });
-        
+        context.response.render("done", { output: output });
     }
 }
