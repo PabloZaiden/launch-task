@@ -13,17 +13,24 @@ class Root {
         context.response.render("launch", { doItUrl: K.getActionRoute(Root, "doIt") });
     }
 
-    @K.Get("/doIt")
+    @K.Post("/doIt")
     @K.DocAction("Execute the action")
     @K.ActionMiddleware(App.authorize)
-    doIt(context: K.Context): void {
-        let command: string = process.env.ACTION_COMMAND;
+    doIt(context: K.Context): Object {
 
-        if (command == undefined) {
-            throw new K.InternalServerError("Missing ACTION_COMMAND");
+        try {
+            let command: string = process.env.ACTION_COMMAND;
+
+            if (command == undefined) {
+                throw new K.InternalServerError("Missing ACTION_COMMAND");
+            }
+
+            let output = Process.execFileSync(command, { encoding: "utf8", stdio: "pipe" });
+
+            return { output: output };
+
+        } catch (err) {
+            return { error: err.toString() };
         }
-
-        let output = Process.execFileSync(command, { encoding: "utf8", stdio: "pipe" });
-        context.response.render("done", { output: output });
     }
 }

@@ -1,22 +1,45 @@
 <html>
+    <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    </head>
     <body style="font-family: monospace">
         <a href="#" id="push" onclick="startDoingStuff()">
             <img src="http://www.jenningswire.com/wp-content/uploads/2013/10/launch.jpg" />
         </a>
         <img src="https://media.giphy.com/media/k5cnWfaRTPgze/giphy.gif" id="monkey" style="display: none"/>
+        <div id="done" style="display: none">
+            <h1></h1>
+            <p>
+            Output:
+            <pre></pre>
+            </p>
+        </div>
         <script type="text/javascript">
             function startDoingStuff() {
-                var href = "<%=doItUrl%>";
-
                 // Don't follow the link
                 event.preventDefault();
 
                 document.getElementById("push").style.display = "none";
                 document.getElementById("monkey").style.display = "block";
 
-                setTimeout(function() {
-                    window.location = href;
-                }, 1000);
+                $.post(
+                    "<%=doItUrl%>",
+                    {},
+                    function (data) {
+                        $("#monkey").hide();
+                        var done = $("#done");
+                        var title = done.find("h1");
+                        var output = done.find("pre");
+                        if (data.error) {
+                            title.text("Error!");
+                            output.text(data.error);
+                        } else {
+                            title.text("It's done!");
+                            output.text(data.output);
+                        }
+                        done.show();
+                    }
+                );
             }
         </script>
     </body>
