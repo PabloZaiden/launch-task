@@ -5,12 +5,12 @@ import * as Process from "child_process";
 @K.Controller("/")
 @K.DocController("Root controller.")
 class Root {
-   
+
     @K.Get("/")
     @K.DocAction(`Redirect to docker controller`)
     @K.ActionMiddleware(App.authorize)
     oauth(context: K.Context): void {
-        context.response.render("launch", {doItUrl: K.getActionRoute(Root, "doIt")});
+        context.response.render("launch", { doItUrl: K.getActionRoute(Root, "doIt") });
     }
 
     @K.Get("/doIt")
@@ -22,9 +22,9 @@ class Root {
         if (command == undefined) {
             throw new K.InternalServerError("Missing ACTION_COMMAND");
         }
-
-        let output = Process.execFileSync(command, {encoding: "utf8", stdio: "pipe"});
-    
-        context.response.render("done", {output: output});
+        
+        let output = Process.execFileSync(command, { encoding: "utf8", stdio: "pipe" });
+            context.response.render("done", { output: output });
+        
     }
 }

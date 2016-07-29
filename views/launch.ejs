@@ -1,5 +1,23 @@
 <html>
     <body style="font-family: monospace">
-        <a href="<%=doItUrl%>"><img src="http://www.jenningswire.com/wp-content/uploads/2013/10/launch.jpg" /></a>
+        <a href="#" id="push" onclick="startDoingStuff()">
+            <img src="http://www.jenningswire.com/wp-content/uploads/2013/10/launch.jpg" />
+        </a>
+        <img src="https://media.giphy.com/media/k5cnWfaRTPgze/giphy.gif" id="monkey" style="display: none"/>
+        <script type="text/javascript">
+            function startDoingStuff() {
+                var href = "<%=doItUrl%>";
+
+                // Don't follow the link
+                event.preventDefault();
+
+                document.getElementById("push").style.display = "none";
+                document.getElementById("monkey").style.display = "block";
+
+                setTimeout(function() {
+                    window.location = href;
+                }, 1000);
+            }
+        </script>
     </body>
 </html>
