@@ -10,16 +10,25 @@ class Root {
     @K.DocAction(`Redirect to docker controller`)
     @K.ActionMiddleware(App.authorize)
     oauth(context: K.Context): void {
-        context.response.render("launch", { doItUrl: K.getActionRoute(Root, "doIt") });
+        let commandArray = JSON.parse(process.env.ACTION_COMMAND);
+
+        context.response.render("launch", { 
+            doItUrl: K.getActionRoute(Root, "doIt"),
+            commands: commandArray
+        });
     }
 
     @K.Post("/doIt")
     @K.DocAction("Execute the action")
     @K.ActionMiddleware(App.authorize)
-    doIt(context: K.Context): Object {
+    doIt(context: K.Context, @K.FromBody("command") index: string): Object {
 
         try {
-            let command: string = process.env.ACTION_COMMAND;
+            let commandIndex = parseInt(index);
+
+            let commandArray = JSON.parse(process.env.ACTION_COMMAND);
+
+            let command = commandArray[commandIndex];
 
             if (command == undefined) {
                 throw new K.InternalServerError("Missing ACTION_COMMAND");

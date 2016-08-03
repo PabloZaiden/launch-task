@@ -11,7 +11,7 @@
 
                 $.post(
                     "<%=doItUrl%>",
-                    {},
+                    {command: $("#command").val()},
                     function (data) {
                         $("#monkey").hide();
                         var done = $("#done");
@@ -31,6 +31,16 @@
         </script>
     </head>
     <body style="font-family: monospace">
+        <select id="command">
+        <%
+        for (let i = 0; i < commands.length; i++) {
+        %>
+            <option value="<%=i%>"><%=commands[i]%></option>
+        <%
+        }
+        %>
+        </select>
+        <br />
         <a href="#" id="push" onclick="startDoingStuff(event)">
             <img src="http://www.jenningswire.com/wp-content/uploads/2013/10/launch.jpg" />
         </a>
