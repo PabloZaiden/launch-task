@@ -1,21 +1,8 @@
 <html>
     <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    </head>
-    <body style="font-family: monospace">
-        <a href="#" id="push" onclick="startDoingStuff()">
-            <img src="http://www.jenningswire.com/wp-content/uploads/2013/10/launch.jpg" />
-        </a>
-        <img src="https://media.giphy.com/media/k5cnWfaRTPgze/giphy.gif" id="monkey" style="display: none"/>
-        <div id="done" style="display: none">
-            <h1></h1>
-            <p>
-            Output:
-            <pre></pre>
-            </p>
-        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
         <script type="text/javascript">
-            function startDoingStuff() {
+            function startDoingStuff(event) {
                 // Don't follow the link
                 event.preventDefault();
 
@@ -42,5 +29,18 @@
                 );
             }
         </script>
+    </head>
+    <body style="font-family: monospace">
+        <a href="#" id="push" onclick="startDoingStuff(event)">
+            <img src="http://www.jenningswire.com/wp-content/uploads/2013/10/launch.jpg" />
+        </a>
+        <img src="https://media.giphy.com/media/k5cnWfaRTPgze/giphy.gif" id="monkey" style="display: none"/>
+        <div id="done" style="display: none">
+            <h1></h1>
+            <p>
+            Output:
+            <pre></pre>
+            </p>
+        </div>
     </body>
 </html>
