@@ -6,7 +6,7 @@ import * as Http from "http";
 import * as EJS from "ejs";
 import * as Passport from "passport";
 import Session = require("cookie-session");
-import SlackSecurityProvider from "./middleware/slackSecurityProvider";
+import GithubSecurityProvider from "./middleware/githubSecurityProvider";
 import {SecurityProvider} from "./middleware/securityProvider";
 import * as K from "kwyjibo";
 
@@ -72,7 +72,7 @@ export default class App {
 
         App.express.set("view engine", "ejs");
 
-        App.securityProvider = new SlackSecurityProvider("/oauth/callback");
+        App.securityProvider = new GithubSecurityProvider("/oauth/callback");
     }
 
 
