@@ -37,11 +37,22 @@ export default class GithubSecurityProvider implements SecurityProvider {
             callbackURL: githubCallbackUrl,
             scope: "repo"
         },
-            function (accessToken: string, refreshToken: string, profile: any, done: Function) {
-                let login = profile._json.login;
+        function (accessToken: string, refreshToken: string, profile: any, done: Function) {
+            let login = profile._json.login;
 
-                Request(`https://api.github.com/orgs/${githubOrganization}/members/${login}`, (err, res, body) => {
-                    if (err) {
+            Request(
+                `https://api.github.com/orgs/${githubOrganization}/members/${login}`,
+                {
+                    headers: {
+                        "user-agent": "launch-task"
+                    },
+                    auth: {
+                        bearer: accessToken,
+                    },
+                    followAllRedirects: true
+                },
+                (err, res, body) => {
+                    if (err || res.statusCode < 200 || res.statusCode >= 300) {
                         done(new Error("User is not a member of the required organization: " + githubOrganization));
                     } else {
                         done(null, {
@@ -51,8 +62,7 @@ export default class GithubSecurityProvider implements SecurityProvider {
                         });
                     }
                 });
-            }
-        ));
+        }));
 
         this.authenticateMiddleware = Passport.authenticate("github");
 
