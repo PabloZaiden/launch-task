@@ -39,7 +39,8 @@ class Root {
             return { output: output };
 
         } catch (err) {
-            return { error: err };
+            let e = err as Error;
+            return { error: `Name: ${e.name} \n Message: ${e.message} \n Stack: ${e.stack}` };
         }
     }
 }
