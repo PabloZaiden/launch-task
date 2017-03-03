@@ -11,7 +11,7 @@ import * as K from "kwyjibo";
 
 export default class App {
 
-    private static port: number = App.normalizePort(process.env.port || "3000");
+    private static port: number = normalizePort(process.env.port || "3000");
     private static server: Http.Server;
     private static express: Express.Express;
     private static isDevelopment = false;
@@ -113,27 +113,10 @@ export default class App {
             } else {
                 res.sendStatus(500);
             }
-        }
     }
 
     private static OnRequestNotFound(req: Express.Request, res: Express.Response, next: Function): void {
         res.sendStatus(404);
-    }
-
-    private static normalizePort(val): any {
-        let port = parseInt(val, 10);
-
-        if (isNaN(port)) {
-            // named pipe
-            return val;
-        }
-
-        if (port >= 0) {
-            // port number
-            return port;
-        }
-
-        return false;
     }
 
     private static onError(error): void {
@@ -169,6 +152,22 @@ export default class App {
             console.log("Listening on " + bind);
         }
     }
+}
+
+function normalizePort(val): any {
+    let port = parseInt(val, 10);
+
+    if (isNaN(port)) {
+        // named pipe
+        return val;
+    }
+
+    if (port >= 0) {
+        // port number
+        return port;
+    }
+
+    return false;
 }
 
 App.init();
