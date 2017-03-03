@@ -39,7 +39,7 @@ class Root {
             return { output: output };
 
         } catch (err) {
-            return { error: err) };
+            return { error: err };
         }
     }
 }
