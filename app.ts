@@ -113,6 +113,7 @@ export default class App {
             } else {
                 res.sendStatus(500);
             }
+        }
     }
 
     private static OnRequestNotFound(req: Express.Request, res: Express.Response, next: Function): void {
