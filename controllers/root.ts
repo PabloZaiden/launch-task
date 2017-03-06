@@ -21,10 +21,10 @@ class Root {
     @K.Post("/doIt")
     @K.DocAction("Execute the action")
     @K.ActionMiddleware(App.authorize)
-    doIt(context: K.Context, @K.FromBody("command") index: string): Object {
+    doIt(context: K.Context, @K.FromBody() payload: any): Object {
 
         try {
-            let commandIndex = parseInt(index);
+            let commandIndex = parseInt(payload.command);
 
             let commandArray = JSON.parse(process.env.ACTION_COMMAND);
 
